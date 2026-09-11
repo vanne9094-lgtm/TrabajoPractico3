@@ -4,6 +4,8 @@
  */
 package trabajopractico3;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -180,8 +182,29 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
         String mail = txtMail.getText().trim();
-        String password = new String(txtPassword.getPassword());
-
+        String password = new String(txtPassword.getPassword()).trim();
+        
+        //Validacion de contenido en jtxfield. 
+        if (mail.isEmpty()|| password.isEmpty()) {
+            txtMail.setText("");
+            JOptionPane.showMessageDialog(this,"Por favor completar los campos" ,
+                    "CAmpos Vacios", JOptionPane.WARNING_MESSAGE);
+              if (mail.isEmpty()) {
+                    txtMail.requestFocus();
+                } else {
+                    txtPassword.requestFocus();
+                 }
+        return; 
+        }
+        //VAlidacion de formato de email ----@---.---..--   
+        String regexEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        if (!mail.matches(regexEmail)) {
+            JOptionPane.showMessageDialog(this, 
+            "Por favor, ingresá un formato de correo electrónico válido (ejemplo@dominio.com).", 
+            "Formato Incorrecto", 
+            JOptionPane.WARNING_MESSAGE);
+        }
+        //Verificacion del Usuario
         if (mail.equals("alumno@ulp.edu.ar") && password.equals("12345678")) {
             javax.swing.JOptionPane.showMessageDialog(this, "¡Bienvenido/a al sistema!", "Mensaje", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } else {
